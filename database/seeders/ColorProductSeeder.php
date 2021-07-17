@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Builder;
 
 class ColorProductSeeder extends Seeder
 {
