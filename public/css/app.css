@@ -1137,6 +1137,10 @@ select {
 	margin-left: 1.5rem;
 	margin-right: 1.5rem;
 }
+.my-2 {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
 .ml-3 {
 	margin-left: 0.75rem;
 }
@@ -1206,11 +1210,11 @@ select {
 .mb-4 {
 	margin-bottom: 1rem;
 }
-.mb-3 {
-	margin-bottom: 0.75rem;
-}
 .mb-2 {
 	margin-bottom: 0.5rem;
+}
+.mb-3 {
+	margin-bottom: 0.75rem;
 }
 .block {
 	display: block;
@@ -1438,9 +1442,6 @@ select {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
 	margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-.overflow-auto {
-	overflow: auto;
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1816,6 +1817,10 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(16, 185, 129, var(--tw-text-opacity));
 }
+.text-orange-500 {
+	--tw-text-opacity: 1;
+	color: rgba(249, 115, 22, var(--tw-text-opacity));
+}
 .text-trueGray-500 {
 	--tw-text-opacity: 1;
 	color: rgba(115, 115, 115, var(--tw-text-opacity));
@@ -1823,10 +1828,6 @@ select {
 .text-red-100 {
 	--tw-text-opacity: 1;
 	color: rgba(254, 226, 226, var(--tw-text-opacity));
-}
-.text-orange-500 {
-	--tw-text-opacity: 1;
-	color: rgba(249, 115, 22, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;

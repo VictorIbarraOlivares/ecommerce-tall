@@ -118,6 +118,33 @@
                     </li>
                 @endforeach
             </ul>
+
+            <p class="text-trueGray-500 px-6 my-2">
+                USUARIOS
+            </p>
+            @livewire('cart-mobil')
+            @auth
+            <a href="{{ route('profile.show') }}" class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                <span class="flex justify-center w-9"><i class="fas fa-user"></i></span>
+                Perfil
+            </a>
+            <a x-on:click.prevent="console.log('submitted'); document.getElementById('logout-form').submit();" href="" class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                <span class="flex justify-center w-9"><i class="fas fa-sign-out-alt"></i></span>
+                Cerrar sesión
+            </a>
+            <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+                @csrf
+            </form>
+            @else
+            <a href="{{ route('login') }}" class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                <span class="flex justify-center w-9"><i class="fas fa-user-circle"></i></span>
+                Iniciar sesión
+            </a>
+            <a href="{{ route('register') }}"class="py-2 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                <span class="flex justify-center w-9"><i class="fas fa-fingerprint"></i></span>
+                Registrarme
+            </a>
+            @endauth
         </div>
     </nav>
 </header>
