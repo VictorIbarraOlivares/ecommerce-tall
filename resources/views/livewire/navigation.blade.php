@@ -77,14 +77,14 @@
         </div>
     </div>
 
-    <nav id="navigation-menu" x-show="open" x-cloack class="bg-trueGray-700 bg-opacity-25 w-full absolute">
+    <nav id="navigation-menu" x-show="open" x-cloack class="bg-trueGray-700 bg-opacity-25 w-full min-h-screen absolute">
         {{-- menu desktop --}}
         <div class="container h-full hidden md:block">
             <div x-on:click.away="close" class="grid grid-cols-4 h-full relative">
                 <ul class="bg-white">
                     @foreach ($categories as $category)
                         <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
-                            <a href="" class="py-2 px-4 text-sm flex items-center">
+                            <a href="{{ route("categories.show", $category) }}" class="py-2 px-4 text-sm flex items-center">
                                 <span class="flex justify-center w-9">{!! $category->icon !!}</span>
                                 {{ $category->name }}
                             </a>
@@ -103,7 +103,7 @@
         </div>
 
         {{-- menu mobil --}}
-        <div class="bg-white h-full overflow-y-auto">
+        <div x-on:click.away="close" class="bg-white h-full md:hidden overflow-y-auto">
             <div class="container bg-gray-200 py-3 mb-2">
                 @livewire('search')
             </div>
@@ -111,7 +111,7 @@
             <ul>
                 @foreach ($categories as $category)
                     <li class="text-trueGray-500 hover:bg-orange-500 hover:text-white">
-                        <a href="" class="py-2 px-4 text-sm flex items-center">
+                        <a href="{{ route("categories.show", $category) }}" class="py-2 px-4 text-sm flex items-center">
                             <span class="flex justify-center w-9">{!! $category->icon !!}</span>
                             {{ $category->name }}
                         </a>
