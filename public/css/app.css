@@ -1801,11 +1801,11 @@ select {
 .pb-1 {
 	padding-bottom: 0.25rem;
 }
-.pt-8 {
-	padding-top: 2rem;
-}
 .pb-6 {
 	padding-bottom: 1.5rem;
+}
+.pt-8 {
+	padding-top: 2rem;
 }
 .text-center {
 	text-align: center;

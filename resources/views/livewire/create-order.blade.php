@@ -15,11 +15,11 @@
             </div>
         </div>
 
-        <div x-data="{ envio_type: @entangle('envio_type') }">
+        <div x-data="{ envioType: @entangle('envioType') }">
             <p class="mt-6 mb-3 text-lg text-gray-700 font-semibold">Envíos</p>
 
             <label class="bg-white rounded-lg shadow-lg px-6 py-4 flex items-center mb-4">
-                <input x-model="envio_type" type="radio" name="envio_type" value="1" class="text-gray-600">
+                <input x-model="envioType" type="radio" name="envioType" value="1" class="text-gray-600">
     
                 <span class="ml-2 text-gray-700">Recojer en tienda (Calle falsa 1111)</span>
                 <span class="font-semibold text-gray-700 ml-auto">
@@ -29,12 +29,12 @@
 
             <div class="bg-white rounded-lg shadow-lg ">
                 <label class="px-6 py-4 flex items-center">
-                    <input x-model="envio_type" type="radio" name="envio_type" value="2" class="text-gray-600">
+                    <input x-model="envioType" type="radio" name="envioType" value="2" class="text-gray-600">
         
                     <span class="ml-2 text-gray-700">Envío a domicilio</span>
                 </label>
 
-                <div class="px-6 pb-6 grid grid-cols-2 gap-6 hidden" :class="{'hidden': envio_type != 2}">
+                <div class="px-6 pb-6 grid grid-cols-2 gap-6 hidden" :class="{'hidden': envioType != 2}">
                     {{-- Departments --}}
                     <div>
                         <x-jet-label value='Departamento' />
@@ -83,7 +83,7 @@
         </div>
 
         <div>
-            <x-jet-button class="mt-6 mb-4" wire:click='store'>
+            <x-jet-button wire:loading.attr='disabled' wire:target='store' class="mt-6 mb-4" wire:click='store'>
                 Continuar con la compra
             </x-jet-button>
             <hr>
@@ -128,13 +128,25 @@
                     <span class="font-semibold">{{ Cart::subtotal() }} USD</span>
                 </p>
                 <p class="flex justify-between items-center">Envio
-                    <span class="font-semibold">Gratis</span>
+                    <span class="font-semibold">
+                        @if ($envioType == 1 || $shippingCost == 0)
+                            Gratis
+                        @else
+                            {{ $shippingCost }} USD
+                        @endif
+                    </span>
                 </p>
 
                 <hr class="mt-4 mb-3">
 
                 <p class="flex justify-between items-center font-semibold">
-                    <span class="text-lg">Total </span>{{ Cart::subtotal() }} USD
+                    <span class="text-lg">Total </span>
+                    @if ($envioType == 1 || $shippingCost == 0)
+                        {{ Cart::subtotal() }} USD
+                    @else
+                        {{ Cart::subtotal() + $shippingCost }} USD
+                    @endif
+                        
                 </p>
             </div>
         </div>
