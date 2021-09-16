@@ -36,7 +36,7 @@ class ProductFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => $this->faker->text(),
-            'price' => $this->faker->randomElement([19.99, 49.99, 99.99]),
+            'price' => $this->faker->randomElement([12990, 45990, 99990]),
             'quantity' => $quantity,
             'status' => Product::PUBLICADO,
             'subcategory_id' => $subcategory->id,

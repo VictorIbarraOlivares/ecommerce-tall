@@ -109,7 +109,7 @@
                                     <p class="text-sm">- {{ __($item->options['size']) }}</p>
                                 @endisset
                             </div>
-                            <p>USD {{ $item->price }}</p>
+                            <p>{{ number_format($item->price, 0, '', '.') }} CLP</p>
                         </article>
                     </li>
                 @empty
@@ -125,14 +125,14 @@
 
             <div class="text-gray-700">
                 <p class="flex justify-between items-center">Subtotal
-                    <span class="font-semibold">{{ Cart::subtotal() }} USD</span>
+                    <span class="font-semibold">{{ number_format(Cart::subtotal(), 0, '', '.') }} CLP</span>
                 </p>
                 <p class="flex justify-between items-center">Envio
                     <span class="font-semibold">
                         @if ($envioType == 1 || $shippingCost == 0)
                             Gratis
                         @else
-                            {{ $shippingCost }} USD
+                            {{ number_format($shippingCost, 0, '', '.') }} CLP
                         @endif
                     </span>
                 </p>
@@ -142,9 +142,9 @@
                 <p class="flex justify-between items-center font-semibold">
                     <span class="text-lg">Total </span>
                     @if ($envioType == 1 || $shippingCost == 0)
-                        {{ Cart::subtotal() }} USD
+                        {{ number_format(Cart::subtotal(), 0, '', '.') }} CLP
                     @else
-                        {{ Cart::subtotal() + $shippingCost }} USD
+                        {{ number_format(Cart::subtotal() + $shippingCost, 0, '', '.') }} CLP
                     @endif
                         
                 </p>

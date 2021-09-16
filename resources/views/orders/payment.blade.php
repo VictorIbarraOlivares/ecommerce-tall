@@ -1,4 +1,33 @@
 <x-app-layout>
+    @php
+        // SDK de Mercado Pago
+        require base_path('vendor/autoload.php');
+        // Agrega credenciales
+        MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+
+        // Crea un objeto de preferencia
+        $preference = new MercadoPago\Preference();
+        $products = array();
+        foreach ($items as $key => $product) {
+            // Crea un ítem en la preferencia
+            $item = new MercadoPago\Item();
+            $item->title = $product->name;
+            $item->quantity = $product->qty;
+            $item->unit_price = intval($product->price);
+
+            $products[] = $item;
+        }
+
+        $preference->back_urls = array(
+            "success" => "https://www.tu-sitio/success",
+            "failure" => "http://www.tu-sitio/failure",
+            "pending" => "http://www.tu-sitio/pending"
+        );
+        $preference->auto_return = "approved";
+        
+        $preference->items = $products;
+        $preference->save();
+    @endphp
     <div class="container py-8">
         <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
             <p class="text-gray-700 uppercase">
@@ -59,13 +88,13 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                {{ $item->price }} USD
+                                {{ number_format($item->price, 0, '', '.') }} CLP
                             </td>
                             <td class="text-center">
                                 {{ $item->qty }}
                             </td>
                             <td class="text-center">
-                               {{ $item->price * $item->qty }} USD 
+                               {{ number_format($item->price * $item->qty, 0, '', '.') }} CLP 
                             </td>
                         </tr>
                     @endforeach
@@ -77,15 +106,41 @@
             <img class="h-14" src="{{ asset('img/metodo-pago.jpg') }}" alt="">
             <div class="text-gray-700">
                 <p class="text-sm font-semibold ">
-                    Subtotal: {{ $order->total - $order->shipping_cost }} USD
+                    Subtotal: {{ number_format($order->total - $order->shipping_cost, 0, '', '.') }} CLP
                 </p>
                 <p class="text-sm font-semibold ">
-                    Envío: {{ $order->shipping_cost }} USD
+                    Envío: {{ number_format($order->shipping_cost, 0, '', '.') }} CLP
                 </p>
                 <p class="text-lg font-bold uppercase">
-                    Total: {{ $order->total }} USD
+                    Total: {{ number_format($order->total, 0, '', '.') }} CLP
                 </p>
+                <div class="cho-container">
+
+                </div>
             </div>
         </div>
     </div>
+
+    {{-- SDK MercadoPago.js V2 --}}
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    
+    <script>
+        // Agrega credenciales de SDK
+        const mp = new MercadoPago("{{ config('services.mercadopago.key') }}", {
+                locale: 'es-AR'
+        });
+        
+        // Inicializa el checkout
+        mp.checkout({
+            preference: {
+                id: '{{ $preference->id }}'
+            },
+            render: {
+                container: '.cho-container', // Indica el nombre de la clase donde se mostrará el botón de pago
+                label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+            }
+        });
+    </script>
+    
 </x-app-layout>
