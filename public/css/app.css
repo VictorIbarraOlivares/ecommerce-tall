@@ -1306,11 +1306,11 @@ select {
 .h-80 {
 	height: 20rem;
 }
-.h-2 {
-	height: 0.5rem;
-}
 .h-14 {
 	height: 3.5rem;
+}
+.h-2 {
+	height: 0.5rem;
 }
 .min-h-screen {
 	min-height: 100vh;
