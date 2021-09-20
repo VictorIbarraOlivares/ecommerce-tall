@@ -1,4 +1,5 @@
-<x-app-layout>
+<div>
+    {{-- Care about people's approval and you will be their prisoner. --}}
     @php
         // SDK de Mercado Pago
         require base_path('vendor/autoload.php');
@@ -13,7 +14,7 @@
         $preference->shipments = $shipments;
 
         $products = array();
-        foreach ($items as $key => $product) {
+        foreach (json_decode($order->content) as $key => $product) {
             // Crea un ítem en la preferencia
             $item = new MercadoPago\Item();
             $item->title = $product->name;
@@ -33,7 +34,7 @@
         $preference->items = $products;
         $preference->save();
     @endphp
-
+    
     <div class="grid grid-cols-5 gap-6 container py-8">
         <div class="col-span-3">
             <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
@@ -101,7 +102,7 @@
                                     {{ $item->qty }}
                                 </td>
                                 <td class="text-center">
-                                   {{ number_format($item->price * $item->qty, 0, '', '.') }} CLP 
+                                    {{ number_format($item->price * $item->qty, 0, '', '.') }} CLP 
                                 </td>
                             </tr>
                         @endforeach
@@ -111,8 +112,8 @@
         </div>
 
         <div class="col-span-2">
-            <div class="bg-white rounded-lg shadow-lg p-6 ">
-                <div class="flex justify-between items-center">
+            <div class="bg-white rounded-lg shadow-lg px-6 pt-6">
+                <div class="flex justify-between items-center mb-4">
                     <img class="h-10" src="{{ asset('img/metodo-pago.jpg') }}" alt="">
                     <div class="text-gray-700">
                         <p class="text-sm font-semibold ">
@@ -127,33 +128,73 @@
                         
                     </div>
                 </div>
-                <div class="cho-container">
+
+                <div class="cho-container mb-6 w-full">
         
                 </div>
+
+                <div id="paypal-button-container"></div>
             </div>
         </div>
     </div>
-
-    {{-- SDK MercadoPago.js V2 --}}
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-
     
-    <script>
-        // Agrega credenciales de SDK
-        const mp = new MercadoPago("{{ config('services.mercadopago.key') }}", {
-                locale: 'es-AR'
-        });
+    @push('script')
+        {{-- SDK MercadoPago.js V2 --}}
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
         
-        // Inicializa el checkout
-        mp.checkout({
-            preference: {
-                id: '{{ $preference->id }}'
-            },
-            render: {
-                container: '.cho-container', // Indica el nombre de la clase donde se mostrará el botón de pago
-                label: 'Pagar (MercadoPago)', // Cambia el texto del botón de pago (opcional)
-            }
-        });
-    </script>
-    
-</x-app-layout>
+            
+        <script>
+            // Agrega credenciales de SDK
+            const mp = new MercadoPago("{{ config('services.mercadopago.key') }}", {
+                    locale: 'es-AR'
+            });
+            
+            // Inicializa el checkout
+            mp.checkout({
+                preference: {
+                    id: '{{ $preference->id }}'
+                },
+                render: {
+                    container: '.cho-container', // Indica el nombre de la clase donde se mostrará el botón de pago
+                    label: 'Pagar (MercadoPago)', // Cambia el texto del botón de pago (opcional)
+                }
+            });
+        </script>
+
+        <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD"></script>
+        
+        <script>
+            paypal.Buttons({
+        
+                // Sets up the transaction when a payment button is clicked
+                createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                    amount: {
+                        value: "{{ $order->total }}" // Can reference variables or functions. Example: `value: document.getElementById('...').value`
+                    }
+                    }]
+                });
+                },
+        
+                // Finalize the transaction after payer approval
+                onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    Livewire.emit('payOrder');
+                    // Successful capture! For dev/demo purposes:
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        var transaction = orderData.purchase_units[0].payments.captures[0];
+                        alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+        
+                    // When ready to go live, remove the alert and show a success message within this page. For example:
+                    // var element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '';
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                });
+                }
+            }).render('#paypal-button-container');
+        
+        </script>
+    @endpush
+</div>
