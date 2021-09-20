@@ -37,4 +37,5 @@ Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
 Route::get('orderns/{order}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('orders/{order}/payment', [OrderController::class, 'payment'])->name('orders.payment');
+Route::get('orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
 Route::post('webhooks', WebhooksController::class);
