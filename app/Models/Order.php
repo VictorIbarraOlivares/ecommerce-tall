@@ -37,4 +37,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeOrderOfUser($query)
+    {
+        return $query->where('user_id', auth()->user()->id);
+    }
 }

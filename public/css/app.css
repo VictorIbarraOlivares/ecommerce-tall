@@ -1258,11 +1258,11 @@ select {
 .mt-0 {
 	margin-top: 0px;
 }
-.-mt-px {
-	margin-top: -1px;
-}
 .mt-12 {
 	margin-top: 3rem;
+}
+.-mt-px {
+	margin-top: -1px;
 }
 .block {
 	display: block;
@@ -1739,9 +1739,6 @@ select {
 .bg-opacity-100 {
 	--tw-bg-opacity: 1;
 }
-.bg-opacity-50 {
-	--tw-bg-opacity: 0.5;
-}
 .bg-opacity-75 {
 	--tw-bg-opacity: 0.75;
 }
@@ -2025,14 +2022,6 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(254, 226, 226, var(--tw-text-opacity));
 }
-.text-gray-200 {
-	--tw-text-opacity: 1;
-	color: rgba(229, 231, 235, var(--tw-text-opacity));
-}
-.text-gray-300 {
-	--tw-text-opacity: 1;
-	color: rgba(209, 213, 219, var(--tw-text-opacity));
-}
 .text-yellow-500 {
 	--tw-text-opacity: 1;
 	color: rgba(245, 158, 11, var(--tw-text-opacity));
@@ -2040,6 +2029,14 @@ select {
 .text-pink-500 {
 	--tw-text-opacity: 1;
 	color: rgba(236, 72, 153, var(--tw-text-opacity));
+}
+.text-gray-200 {
+	--tw-text-opacity: 1;
+	color: rgba(229, 231, 235, var(--tw-text-opacity));
+}
+.text-gray-300 {
+	--tw-text-opacity: 1;
+	color: rgba(209, 213, 219, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;

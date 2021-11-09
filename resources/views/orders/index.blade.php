@@ -1,41 +1,41 @@
 <x-app-layout>
     <div class="container py-12">
         <section class="grid grid-cols-5 gap-6 text-white">
-            <div class="bg-red-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">{{ $orders->where('status', App\Models\Order::PENDIENTE)->count() }}</p>
+            <a href="{{ route('orders.index') . "?status=" . App\Models\Order::PENDIENTE }}" class="bg-red-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                <p class="text-center text-2xl">{{ $amountOfOrders[App\Models\Order::PENDIENTE] }}</p>
                 <p class="uppercase text-center">Pendiente</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-business-time"></i>
                 </p>
-            </div>
-            <div class="bg-gray-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">{{ $orders->where('status', App\Models\Order::RECIBIDO)->count() }}</p>
+            </a>
+            <a href="{{ route('orders.index') . "?status=" . App\Models\Order::RECIBIDO }}" class="bg-gray-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                <p class="text-center text-2xl">{{ $amountOfOrders[App\Models\Order::RECIBIDO] }}</p>
                 <p class="uppercase text-center">Recibido</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-credit-card"></i>
                 </p>
-            </div>
-            <div class="bg-yellow-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">{{ $orders->where('status', App\Models\Order::ENVIADO)->count() }}</p>
+            </a>
+            <a href="{{ route('orders.index') . "?status=" . App\Models\Order::ENVIADO }}" class="bg-yellow-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                <p class="text-center text-2xl">{{ $amountOfOrders[App\Models\Order::ENVIADO] }}</p>
                 <p class="uppercase text-center">Enviado</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-truck"></i>
                 </p>
-            </div>
-            <div class="bg-pink-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">{{ $orders->where('status', App\Models\Order::ENTREGADO)->count() }}</p>
+            </a>
+            <a href="{{ route('orders.index') . "?status=" . App\Models\Order::ENTREGADO }}" class="bg-pink-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                <p class="text-center text-2xl">{{ $amountOfOrders[App\Models\Order::ENTREGADO] }}</p>
                 <p class="uppercase text-center">Entregado</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-check-circle"></i>
                 </p>
-            </div>
-            <div class="bg-green-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">{{ $orders->where('status', App\Models\Order::ANULADO)->count() }}</p>
+            </a>
+            <a href="{{ route('orders.index') . "?status=" . App\Models\Order::ANULADO }}" class="bg-green-500 bg-opacity-75 rounded-lg px-12 pt-8 pb-4">
+                <p class="text-center text-2xl">{{ $amountOfOrders[App\Models\Order::ANULADO] }}</p>
                 <p class="uppercase text-center">Anulado</p>
                 <p class="text-center text-2xl mt-2">
                     <i class="fas fa-times-circle"></i>
                 </p>
-            </div>
+            </a>
         </section>
 
         <section class="bg-white shadow-lg rounded-lg px-12 py-8 mt-12 text-gray-700">
@@ -96,7 +96,7 @@
                                 </span>
                                 <br>
                                 <span class="text-sm">
-                                    {{ $order->total }}
+                                    {{ $order->total }} CLP
                                 </span>
                             </div>
 
