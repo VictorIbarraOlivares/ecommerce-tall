@@ -33,10 +33,13 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
+        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6 flex items-center">
             <p class="text-gray-700 uppercase">
                 <span class="font-bold">Número de orden:</span> Orden-{{ $order->id }}
             </p>
+            @if ($order->status == App\Models\Order::PENDIENTE)
+                <x-button-link class="ml-auto" href="{{ route('orders.payment', $order) }}">Ir a pagar</x-button-link>
+            @endif
         </div>
 
         <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
