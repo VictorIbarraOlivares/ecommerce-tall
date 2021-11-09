@@ -36,3 +36,24 @@ function qtyAvailable(Product $product, $colorId = null, $sizeId = null)
 {
     return quantity($product, $colorId, $sizeId) - qtyAdded($product, $colorId, $sizeId);
 }
+
+function discount($item)
+{
+    $product = Product::findOrFail($item->id);
+    $qtyAvailable = qtyAvailable($product, $item->options->color_id, $item->options->size_id);
+    if ($item->options->size_id) {
+        $size = Size::findOrFail($item->options->size_id);
+        $size->colors()->detach($item->options->color_id);
+        $size->colors()->attach([
+            $item->options->color_id => ['quantity' => $qtyAvailable]
+        ]);
+    } elseif ($item->options->color_id) {
+        $product->colors()->detach($item->options->color_id);
+        $product->colors()->attach([
+            $item->options->color_id => ['quantity' => $qtyAvailable]
+        ]);
+    } else {
+        $product->quantity = $qtyAvailable;
+        $product->save();
+    }
+}

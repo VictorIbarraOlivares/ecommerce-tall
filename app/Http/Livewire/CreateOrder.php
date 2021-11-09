@@ -97,6 +97,9 @@ class CreateOrder extends Component
             $order->reference = $this->reference; 
         }
         $order->save();
+        foreach (Cart::content() as $item) {
+            discount($item);
+        }
         Cart::destroy();
         return redirect()->route('orders.payment', $order);
     }
