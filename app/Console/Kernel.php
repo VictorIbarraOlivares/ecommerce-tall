@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Order;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,20 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function() {
+            $hour = now()->subMinute(10);
+            $orders = Order::where('status', Order::PENDIENTE)
+                ->whereTime('created_at', '<=', $hour)
+                ->get();
+            foreach ($orders as $order) {
+                $items = json_decode($order->content);
+                foreach ($items as $item) {
+                    increase($item);
+                };
+                $order->status = Order::ANULADO;
+                $order->save();
+            }
+        })->everyMinute();
     }
 
     /**

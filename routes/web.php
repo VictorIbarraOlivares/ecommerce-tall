@@ -44,17 +44,3 @@ Route::middleware(['auth'])->group(function() {
     Route::get('orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
     Route::post('webhooks', WebhooksController::class);
 });
-
-Route::get('prueba', function() {
-    $hour = now()->subMinute(1);
-    $orders = Order::where('status', Order::PENDIENTE)->whereTime('created_at', '<=', $hour)->get();
-    foreach ($orders as $order) {
-        $items = json_decode($order->content);
-        foreach ($items as $item) {
-            increase($item);
-        };
-        $order->status = Order::ANULADO;
-        $order->save();
-    }
-    return 'finito';
-});
