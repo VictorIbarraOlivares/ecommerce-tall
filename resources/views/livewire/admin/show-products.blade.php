@@ -1,9 +1,15 @@
 <div>
     {{-- Care about people's approval and you will be their prisoner. --}}
     <x-slot name='header'>
-        <h2 class="font-semibold text-xl text-gray-600 leading-tight">
-            Lista de productos
-        </h2>
+        <div class="flex items-center">
+            <h2 class="font-semibold text-xl text-gray-600 leading-tight">
+                Lista de productos
+            </h2>
+    
+            <x-button-link class="ml-auto" color="orange" href="{{ route('admin.products.create') }}">
+                Agregar Producto
+            </x-button-link>
+        </div>
     </x-slot>
 
     <div class="container py-12">
@@ -11,7 +17,7 @@
             <div class="px-6 py-4">
                 <x-jet-input wire:model="search" type="text" class="w-full" placeholder="Ingrese nombre del producto para buscar" />
             </div>
-            <table class="w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col"
@@ -36,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($products as $product)    
+                    @forelse ($products as $product)    
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -89,13 +95,21 @@
                                 <a href="{{ route('admin.products.edit', $product) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center p-4">
+                                Sin resultado para "{{ $search }}"
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 
-            <div class="px-6 py-4">
-                {{ $products->links() }}
-            </div>
+            @if ($products->hasPages())
+                <div class="px-6 py-4">
+                    {{ $products->links() }}
+                </div>
+            @endif
         </x-table-responsive>
     </div>
 </div>
