@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire\Admin;
 
+use Livewire\Component;
 use App\Models\Category;
 use App\Models\Subcategory;
-use Livewire\Component;
+use Illuminate\Support\Str;
 
 class CreateProduct extends Component
 {
@@ -12,6 +13,14 @@ class CreateProduct extends Component
     public $categoryId = "";
     public $subCategories = array();
     public $subCategoryId = "";
+    public $name;
+    public $slug;
+    public $description;
+
+    public function updatedName($value)
+    {
+        $this->slug = Str::slug($value);
+    }
 
     public function updatedCategoryId()
     {
