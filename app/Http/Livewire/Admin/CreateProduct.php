@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Brand;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Subcategory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class CreateProduct extends Component
@@ -16,6 +18,11 @@ class CreateProduct extends Component
     public $name;
     public $slug;
     public $description;
+    public $brands = array();
+    public $brandId = "";
+    public $price;
+    public $quantity;
+
 
     public function updatedName($value)
     {
@@ -25,7 +32,15 @@ class CreateProduct extends Component
     public function updatedCategoryId()
     {
         $this->subCategories = Subcategory::where('category_id', $this->categoryId)->get();
-        $this->reset('subCategoryId');
+        $this->brands = Brand::whereHas('categories', function (Builder $query){
+            $query->where('category_id', $this->categoryId);
+        })->get();
+        $this->reset(['subCategoryId', 'brandId']);
+    }
+
+    public function getSubcategoryProperty()
+    {
+        return Subcategory::find($this->subCategoryId);
     }
 
     public function mount()

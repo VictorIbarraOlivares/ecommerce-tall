@@ -44,6 +44,30 @@
                 .catch( error => {
                     console.error( error );
                 } );" 
-            x-ref="miEdit" class="w-full form-control" rows="8"></textarea>
+            x-ref="miEdit" class="w-full form-control" rows="8">
+        </textarea>
     </div>
+
+    <div class="grid grid-cols-2 gap-6 mb-4">
+        <div>
+            <x-jet-label value="Marca"/>
+            <select class="w-full form-control" wire:model='brandId'>
+                <option value="" selected disabled>Seleccione una marca</option>
+                @foreach ($brands as $brand)
+                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <x-jet-label value="Precio"/>
+            <x-jet-input wire:model='price' type="number" class="w-full" placeholder="Ingrese el precio del producto" />
+        </div>
+    </div>
+
+    @if ($subCategoryId && !$this->subcategory->color && !$this->subcategory->size)
+        <div>
+            <x-jet-label value="Cantidad"/>
+            <x-jet-input wire:model='quantity' type="number" class="w-full" placeholder="Ingrese la cantidad del producto" />
+        </div>
+    @endif
 </div>
