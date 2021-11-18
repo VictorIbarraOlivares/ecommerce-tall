@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Brand;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -22,6 +23,36 @@ class CreateProduct extends Component
     public $brandId = "";
     public $price;
     public $quantity;
+
+    protected $rules = [
+        'categoryId' => 'required',
+        'subCategoryId' => 'required',
+        'name' => 'required',
+        'slug' => 'required|unique:products',
+        'description' => 'required',
+        'brandId' => 'required',
+        'price' => 'required',
+    ];
+
+    public function save()
+    {
+        $rules = $this->rules;
+        if ($this->subCategoryId && !$this->subcategory->color && !$this->subcategory->size) {
+            $rules['quantity'] = 'required';
+        }
+        $this->validate($rules);
+        $product = new Product();
+        $product->name = $this->name;
+        $product->slug = $this->slug;
+        $product->description = $this->description;
+        $product->subcategory_id = $this->subCategoryId;
+        $product->brand_id = $this->brandId;
+        $product->price = $this->price;
+        if ($this->subCategoryId && !$this->subcategory->color && !$this->subcategory->size) {
+            $product->quantity = $this->quantity;
+        }
+        $product->save();
+    }
 
 
     public function updatedName($value)

@@ -146,7 +146,15 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'quantity' => 'cantidad',
+        'categoryId' => 'categorias',
+        'subCategoryId' => 'subcategorias',
+        'name' => 'nombre',
+        'description' => 'descripcion',
+        'brandId' => 'marca',
+        'price' => 'precio',
+    ],
 
 
 ];
