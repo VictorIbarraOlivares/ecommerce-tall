@@ -13,31 +13,31 @@ use Illuminate\Support\Str;
 class CreateProduct extends Component
 {
     public $categories;
-    public $categoryId = "";
+    public $category_id = "";
     public $subCategories = array();
-    public $subCategoryId = "";
+    public $subcategory_id = "";
     public $name;
     public $slug;
     public $description;
     public $brands = array();
-    public $brandId = "";
+    public $brand_id = "";
     public $price;
     public $quantity;
 
     protected $rules = [
-        'categoryId' => 'required',
-        'subCategoryId' => 'required',
+        'category_id' => 'required',
+        'subcategory_id' => 'required',
         'name' => 'required',
         'slug' => 'required|unique:products',
         'description' => 'required',
-        'brandId' => 'required',
+        'brand_id' => 'required',
         'price' => 'required',
     ];
 
     public function save()
     {
         $rules = $this->rules;
-        if ($this->subCategoryId && !$this->subcategory->color && !$this->subcategory->size) {
+        if ($this->subcategory_id && !$this->subcategory->color && !$this->subcategory->size) {
             $rules['quantity'] = 'required';
         }
         $this->validate($rules);
@@ -45,17 +45,16 @@ class CreateProduct extends Component
         $product->name = $this->name;
         $product->slug = $this->slug;
         $product->description = $this->description;
-        $product->subcategory_id = $this->subCategoryId;
-        $product->brand_id = $this->brandId;
+        $product->subcategory_id = $this->subcategory_id;
+        $product->brand_id = $this->brand_id;
         $product->price = $this->price;
-        if ($this->subCategoryId && !$this->subcategory->color && !$this->subcategory->size) {
+        if ($this->subcategory_id && !$this->subcategory->color && !$this->subcategory->size) {
             $product->quantity = $this->quantity;
         }
         $product->save();
 
         return redirect()->route('admin.products.edit', $product);
     }
-
 
     public function updatedName($value)
     {
@@ -64,16 +63,16 @@ class CreateProduct extends Component
 
     public function updatedCategoryId()
     {
-        $this->subCategories = Subcategory::where('category_id', $this->categoryId)->get();
+        $this->subCategories = Subcategory::where('category_id', $this->category_id)->get();
         $this->brands = Brand::whereHas('categories', function (Builder $query){
-            $query->where('category_id', $this->categoryId);
+            $query->where('category_id', $this->category_id);
         })->get();
-        $this->reset(['subCategoryId', 'brandId']);
+        $this->reset(['subcategory_id', 'brand_id']);
     }
 
     public function getSubcategoryProperty()
     {
-        return Subcategory::find($this->subCategoryId);
+        return Subcategory::find($this->subcategory_id);
     }
 
     public function mount()

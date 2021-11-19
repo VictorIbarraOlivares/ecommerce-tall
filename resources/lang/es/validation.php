@@ -148,11 +148,11 @@ return [
 
     'attributes' => [
         'quantity' => 'cantidad',
-        'categoryId' => 'categorias',
-        'subCategoryId' => 'subcategorias',
+        'category_id' => 'categorias',
+        'subcategory_id' => 'subcategorias',
         'name' => 'nombre',
         'description' => 'descripcion',
-        'brandId' => 'marca',
+        'brand_id' => 'marca',
         'price' => 'precio',
     ],
 

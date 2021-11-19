@@ -4,23 +4,23 @@
     <div class="grid grid-cols-2 gap-6 mb-4">
         <div>
             <x-jet-label value="Categorias"/>
-            <select class="w-full form-control" wire:model='categoryId'>
+            <select class="w-full form-control" wire:model='category_id'>
                 <option value="" selected disabled>Seleccione una categoria</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
-            <x-jet-input-error for='categoryId' />
+            <x-jet-input-error for='category_id' />
         </div>
         <div>
             <x-jet-label value="Subcategorias"/>
-            <select class="w-full form-control" wire:model='subCategoryId'>
+            <select class="w-full form-control" wire:model='subcategory_id'>
                 <option value="" selected disabled>Seleccione una subcategoria</option>
                 @foreach ($subCategories as $subcategory)
                     <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
                 @endforeach
             </select>
-            <x-jet-input-error for='subCategoryId' />
+            <x-jet-input-error for='subcategory_id' />
         </div>
     </div>
     <div class="mb-4">
@@ -58,13 +58,13 @@
     <div class="grid grid-cols-2 gap-6 mb-4">
         <div>
             <x-jet-label value="Marca"/>
-            <select class="w-full form-control" wire:model='brandId'>
+            <select class="w-full form-control" wire:model='brand_id'>
                 <option value="" selected disabled>Seleccione una marca</option>
                 @foreach ($brands as $brand)
                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
             </select>
-            <x-jet-input-error for='brandId' />
+            <x-jet-input-error for='brand_id' />
         </div>
         <div>
             <x-jet-label value="Precio"/>
@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    @if ($subCategoryId && !$this->subcategory->color && !$this->subcategory->size)
+    @if ($subcategory_id && !$this->subcategory->color && !$this->subcategory->size)
         <div class="mb-4">
             <x-jet-label value="Cantidad"/>
             <x-jet-input wire:model='quantity' type="number" class="w-full" placeholder="Ingrese la cantidad del producto" />
