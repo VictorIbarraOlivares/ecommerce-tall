@@ -34,10 +34,13 @@ class ColorProduct extends Component
 
         $this->reset(['color_id', 'quantity']);
         $this->emit('saved');
+
+        $this->product = $this->product->fresh();
     }
 
     public function render()
     {
-        return view('livewire.admin.color-product');
+        $product_colors = $this->product->colors;
+        return view('livewire.admin.color-product', compact('product_colors'));
     }
 }
