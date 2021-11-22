@@ -48,7 +48,7 @@
             </thead>
             <tbody>
                 @foreach ($product_colors as $product_color)
-                    <tr>
+                    <tr wire:key='color-product-{{ $product_color->pivot->id  }}'>
                         <td class="capitalize px-4 py-2">
                             {{ __($colors->find($product_color->pivot->color_id)->name) }}
                         </td>
@@ -56,7 +56,11 @@
                             {{ $product_color->pivot->quantity }} unidades
                         </td>
                         <td class="px-4 py-2 flex">
-                            <x-jet-secondary-button class="ml-auto mr-2">
+                            <x-jet-secondary-button 
+                                wire:click='edit({{ $product_color->pivot->id  }})' 
+                                wire:loading.attr='disabled'
+                                wire:target='edit({{ $product_color->pivot->id  }})' 
+                                class="ml-auto mr-2">
                                 Actualizar
                             </x-jet-secondary-button>
                             <x-jet-danger-button>
@@ -68,4 +72,39 @@
             </tbody>
         </table>
     </div>
+
+    <x-jet-dialog-modal wire:model='open_modal'>
+        <x-slot name='title'>
+            Editar colores
+        </x-slot>
+        <x-slot name='content'>
+            <div class="mb-4">
+                <x-jet-label>
+                    Color
+                </x-jet-label>
+                <select wire:model='pivot_color_id' class="form-control w-full">
+                    <option value="" disabled>Seleccione un color</option>
+                    @foreach ($colors as $color)
+                        <option value="{{ $color->id }}">{{ ucfirst(__($color->name)) }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div >
+                <x-jet-label>
+                    Cantidad
+                </x-jet-label>
+                
+                <x-jet-input wire:model='pivot_quantity' type="number" class="w-full form-control" placeholder="Ingrese una cantidad" />
+            </div>
+        </x-slot>
+        <x-slot name='footer'>
+            <x-jet-secondary-button wire:click="$set('open_modal', false)" class="ml-auto mr-2">
+                Cancelar
+            </x-jet-secondary-button>
+            <x-jet-button>
+                Actualizar
+            </x-jet-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>
