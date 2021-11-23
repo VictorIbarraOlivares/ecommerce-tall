@@ -37,6 +37,7 @@
         </div>
     </div>
 
+    @if ($product_colors->count())
     <div class=" bg-white rounded-lg shadow-lg p-6">
         <table>
             <thead>
@@ -57,13 +58,13 @@
                         </td>
                         <td class="px-4 py-2 flex">
                             <x-jet-secondary-button 
-                                wire:click='edit({{ $product_color->pivot->id  }})' 
+                                wire:click='editColor({{ $product_color->pivot->id  }})' 
                                 wire:loading.attr='disabled'
-                                wire:target='edit({{ $product_color->pivot->id  }})' 
+                                wire:target='editColor({{ $product_color->pivot->id  }})' 
                                 class="ml-auto mr-2">
                                 Actualizar
                             </x-jet-secondary-button>
-                            <x-jet-danger-button>
+                            <x-jet-danger-button wire:click="$emit('delete-pivot', {{ $product_color->pivot->id  }})">
                                 Eliminar
                             </x-jet-danger-button>
                         </td>
@@ -72,6 +73,7 @@
             </tbody>
         </table>
     </div>
+    @endif
 
     <x-jet-dialog-modal wire:model='open_modal'>
         <x-slot name='title'>
@@ -99,12 +101,40 @@
             </div>
         </x-slot>
         <x-slot name='footer'>
-            <x-jet-secondary-button wire:click="$set('open_modal', false)" class="ml-auto mr-2">
+            <x-jet-secondary-button wire:click="$set('open_modal', false)" >
                 Cancelar
             </x-jet-secondary-button>
-            <x-jet-button>
+            <x-jet-button wire:click='updateColor'
+                wire:loading.attr='disabled'
+                wire:target='updateColor' 
+                >
                 Actualizar
             </x-jet-button>
         </x-slot>
     </x-jet-dialog-modal>
+
+    @push('script')
+        <script>
+            Livewire.on('delete-pivot', pivot => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                    text: "No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('deleteColor', pivot);
+                        Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                        )
+                    }
+                })
+            })
+        </script>
+    @endpush
 </div>
