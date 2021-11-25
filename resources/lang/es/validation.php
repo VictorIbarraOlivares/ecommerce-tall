@@ -154,7 +154,8 @@ return [
         'description' => 'descripcion',
         'brand_id' => 'marca',
         'price' => 'precio',
-        'color_id' => 'color'
+        'color_id' => 'color',
+        'name_edit' => 'nombre',
     ],
 
 
