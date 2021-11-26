@@ -1,6 +1,6 @@
-<div class="">
-    {{-- Stop trying to control. --}}
-    <div class="my-12 bg-white rounded-lg shadow-lg p-6">
+<div class="mt-4">
+    {{-- Care about people's approval and you will be their prisoner. --}}
+    <div class=" bg-gray-100 rounded-lg shadow-lg p-6">
         <div class="mb-6">
             <x-jet-label>
                 Color
@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    @if ($product_colors->count())
-    <div class=" bg-white rounded-lg shadow-lg p-6">
+    @if ($size_colors->count())
+    <div class=" mt-8">
         <table>
             <thead>
                 <tr>
@@ -48,23 +48,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($product_colors as $product_color)
-                    <tr wire:key='color-product-{{ $product_color->pivot->id  }}'>
+                @foreach ($size_colors as $size_color)
+                    <tr wire:key='color-product-{{ $size_color->pivot->id  }}'>
                         <td class="capitalize px-4 py-2">
-                            {{ __($colors->find($product_color->pivot->color_id)->name) }}
+                            {{ __($colors->find($size_color->pivot->color_id)->name) }}
                         </td>
                         <td class="px-4 py-2">
-                            {{ $product_color->pivot->quantity }} unidades
+                            {{ $size_color->pivot->quantity }} unidades
                         </td>
                         <td class="px-4 py-2 flex">
                             <x-jet-secondary-button 
-                                wire:click='editColor({{ $product_color->pivot->id  }})' 
+                                wire:click='editColor({{ $size_color->pivot->id  }})' 
                                 wire:loading.attr='disabled'
-                                wire:target='editColor({{ $product_color->pivot->id  }})' 
+                                wire:target='editColor({{ $size_color->pivot->id  }})' 
                                 class="ml-auto mr-2">
                                 Actualizar
                             </x-jet-secondary-button>
-                            <x-jet-danger-button wire:click="$emit('delete-color-product', {{ $product_color->pivot->id  }})">
+                            <x-jet-danger-button wire:click="$emit('delete-color-size', {{ $size_color->pivot->id  }})">
                                 Eliminar
                             </x-jet-danger-button>
                         </td>
@@ -115,7 +115,7 @@
 
     @push('script')
         <script>
-            Livewire.on('delete-color-product', pivot => {
+            Livewire.on('delete-color-size', pivot => {
                 Swal.fire({
                     title: 'Eliminar?',
                     text: "No podrás revertir esto!",
@@ -126,7 +126,7 @@
                     confirmButtonText: 'Si, eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('admin.color-product','deleteColor', pivot);
+                        Livewire.emitTo('admin.color-size','deleteColor', pivot);
                         Swal.fire(
                         'Eliminado!',
                         '',

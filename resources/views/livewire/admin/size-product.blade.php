@@ -26,11 +26,13 @@
                         <x-jet-button wire:click='editSize({{ $product_size->id }})' wire:loading.attr='disabled' wire:target='editSize({{ $product_size->id }})' >
                             <i class="fas fa-edit"></i>
                         </x-jet-button>
-                        <x-jet-danger-button wire:click="$emit('delete-size', {{ $product_size->id  }})">
+                        <x-jet-danger-button wire:click="$emit('delete-size-product', {{ $product_size->id  }})">
                             <i class="fas fa-trash"></i>
                         </x-jet-danger-button>
                     </div>
                 </div>
+
+                @livewire('admin.color-size', ['size' => $product_size], key('color-size-'.$product_size->id))
             </li>
         @endforeach
     </ul>
@@ -61,7 +63,7 @@
 
     @push('script')
         <script>
-            Livewire.on('delete-size', product_size_id => {
+            Livewire.on('delete-size-product', product_size_id => {
                 Swal.fire({
                     title: 'Eliminar?',
                     text: "No podrás revertir esto!",
@@ -72,7 +74,7 @@
                     confirmButtonText: 'Si, eliminar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Livewire.emit('deleteSize', product_size_id);
+                        Livewire.emitTo('admin.size-product','deleteSize', product_size_id);
                         Swal.fire(
                         'Eliminado!',
                         '',
