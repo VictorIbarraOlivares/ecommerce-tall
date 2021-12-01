@@ -1,6 +1,12 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-700">
     {{-- Stop trying to control. --}}
     <h1 class="text-3xl text-center font-semibold mb-8">Complete esta información para crear un producto</h1>
+    <div class="mb-4" wire:ignore>
+        <form action="{{ route('admin.products.files', $product) }}" method="POST" class="dropzone" id="my-awesome-dropzone">
+            @csrf
+        </form>
+    </div>
+
     <div class="bg-white shadow-xl rounded-lg p-6">
         <div class="grid grid-cols-2 gap-6 mb-4">
             <div>
@@ -101,4 +107,24 @@
             @livewire('admin.color-product', ['product' => $product], key('color-product-'.$product->id))
         @endif
     @endif
+
+    @push('script')
+        <script>
+            Dropzone.options.myAwesomeDropzone = { // camelized version of the `id`
+                // headers: {
+                //     'X-CSRF-TOKEN' : "{{ csrf_token() }}"
+                // },
+                acceptedFiles: 'image/*',
+                dictDefaultMessage: 'Arrastre una imagen al recuadro',
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 2, // MB
+                // accept: function(file, done) {
+                //     if (file.name == "justinbieber.jpg") {
+                //     done("Naha, you don't.");
+                //     }
+                //     else { done(); }
+                // }
+            };
+        </script>
+      @endpush
 </div>
