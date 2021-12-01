@@ -22,12 +22,17 @@ class SizeProduct extends Component
     public function save()
     {
         $this->validate();
-        $this->product->sizes()->create([
-            'name' => $this->name
-        ]);
+        $size = Size::where('product_id', $this->product->id)->where('name', $this->name)->first();
+        if ($size) {
+            $this->emit('error-size', 'Esta talla ya existe');
+        } else {
+            $this->product->sizes()->create([
+                'name' => $this->name
+            ]);
+        }
+
         $this->reset('name');
         $this->product = $this->product->fresh();
-        
     }
 
     public function editSize(Size $size)
