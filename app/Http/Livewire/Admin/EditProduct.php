@@ -6,9 +6,11 @@ use App\Models\Brand;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Subcategory;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class EditProduct extends Component
 {
@@ -72,6 +74,13 @@ class EditProduct extends Component
         $this->product->save();
 
         $this->emit('saved');
+    }
+
+    public function deleteImage(Image $image)
+    {
+        Storage::delete([$image->url]);
+        $image->delete();
+        $this->product = $this->product->fresh();
     }
 
     public function render()
