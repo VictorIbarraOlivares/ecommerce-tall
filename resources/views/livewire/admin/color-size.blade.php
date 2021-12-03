@@ -115,26 +115,7 @@
 
     @push('script')
         <script>
-            Livewire.on('delete-color-size', pivot => {
-                Swal.fire({
-                    title: 'Eliminar?',
-                    text: "No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, eliminar!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emitTo('admin.color-size','deleteColor', pivot);
-                        Swal.fire(
-                        'Eliminado!',
-                        '',
-                        'success'
-                        )
-                    }
-                })
-            })
+            
         </script>
     @endpush
 </div>

@@ -135,6 +135,12 @@
                 dictDefaultMessage: 'Arrastre una imagen al recuadro',
                 paramName: "file", // The name that will be used to transfer the file
                 maxFilesize: 2, // MB
+                complete (file) {
+                    this.removeFile(file);
+                },
+                queuecomplete() {
+                    Livewire.emit('refreshProduct');
+                },
                 // accept: function(file, done) {
                 //     if (file.name == "justinbieber.jpg") {
                 //     done("Naha, you don't.");
@@ -142,6 +148,66 @@
                 //     else { done(); }
                 // }
             };
+            Livewire.on('delete-size-product', product_size_id => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                    text: "No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.size-product','deleteSize', product_size_id);
+                        Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                        )
+                    }
+                })
+            })
+            Livewire.on('delete-color-product', pivot => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                    text: "No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.color-product','deleteColor', pivot);
+                        Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                        )
+                    }
+                })
+            })
+            Livewire.on('delete-color-size', pivot => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                    text: "No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.color-size','deleteColor', pivot);
+                        Swal.fire(
+                        'Eliminado!',
+                        '',
+                        'success'
+                        )
+                    }
+                })
+            })
         </script>
       @endpush
 </div>

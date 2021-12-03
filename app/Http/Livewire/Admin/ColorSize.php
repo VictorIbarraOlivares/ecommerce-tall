@@ -17,11 +17,12 @@ class ColorSize extends Component
     public $pivot_color_id;
     public $pivot_quantity;
 
+    protected $listeners = ['deleteColor'];
+
     protected $rules = [
         'color_id' => 'required',
         'quantity' => 'required|numeric',
     ];
-
 
     public function mount()
     {
