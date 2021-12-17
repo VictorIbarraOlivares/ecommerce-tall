@@ -20,7 +20,7 @@ class EditProduct extends Component
     public $subCategories;
     public $brands;
 
-    protected $listeners = ['refreshProduct'];
+    protected $listeners = ['refreshProduct', 'delete'];
 
     protected $rules = [
         'category_id' => 'required',
@@ -87,7 +87,19 @@ class EditProduct extends Component
     {
         Storage::delete([$image->url]);
         $image->delete();
-        $this->product = $this->product->fresh();
+        $this->refreshProduct();
+    }
+
+    public function delete()
+    {
+        $images = $this->product->images;
+        foreach ($images as $image) {
+            Storage::delete([$image->url]);
+            $image->delete();
+        }
+
+        $this->product->delete();
+        return redirect()->route('admin.index');
     }
 
     public function render()
