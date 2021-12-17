@@ -42,5 +42,7 @@
     "white": "blanco",
     "blue": "azul",
     "red": "rojo",
-    "black": "negro"
+    "black": "negro",
+    "Products": "Productos",
+    "Categories": "Categorías"
 }
