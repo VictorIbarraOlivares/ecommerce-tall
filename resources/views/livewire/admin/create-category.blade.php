@@ -47,7 +47,7 @@
                 <x-jet-label>
                     Imagen
                 </x-jet-label>
-                <input wire:model='createForm.image' type="file" name="" id="" class="mt-1">
+                <input wire:model='createForm.image' accept="image/*" type="file" id="{{ $rand }}" class="mt-1">
                 <x-jet-input-error for='createForm.image' />
             </div>
         </x-slot>
