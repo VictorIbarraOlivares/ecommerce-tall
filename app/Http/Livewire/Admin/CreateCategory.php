@@ -37,6 +37,8 @@ class CreateCategory extends Component
         'createForm.brands' => 'marcas',
     ];
 
+    protected $listeners = ['delete'];
+
     public function mount()
     {
         $this->getBrands();
@@ -73,6 +75,12 @@ class CreateCategory extends Component
         $category->brands()->attach($this->createForm['brands']);
         $this->rand = rand();
         $this->reset('createForm');
+        $this->getCategories();
+    }
+
+    public function delete(Category $category)
+    {
+        $category->delete();
         $this->getCategories();
     }
 

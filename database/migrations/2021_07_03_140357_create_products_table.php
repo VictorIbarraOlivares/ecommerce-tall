@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('quantity')->nullable();
             $table->enum('status', [Product::BORRADOR, Product::PUBLICADO])->default(Product::BORRADOR);
             $table->unsignedBigInteger('subcategory_id');
-            $table->foreign('subcategory_id')->references('id')->on('subcategories');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();
