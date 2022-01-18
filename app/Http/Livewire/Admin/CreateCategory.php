@@ -101,16 +101,17 @@ class CreateCategory extends Component
 
     public function edit(Category $category)
     {
+        $this->reset(['editImage']);
+        $this->resetValidation();
         $this->category = $category;
         $this->editForm = [
             'open' => true,
             'name' => $category->name,
             'slug' => $category->slug,
             'icon' => $category->icon,
-            'image' => Storage::url($category->image),
+            'image' => $category->image,
             'brands' => $category->brands->pluck('id')->toArray()
         ];
-        $this->reset(['editImage']);
     }
 
     public function update()
@@ -125,6 +126,15 @@ class CreateCategory extends Component
             $rules['editImage'] = 'image|max:1024';
         }
         $this->validate($rules);
+
+        if ($this->editImage) {
+            Storage::delete($this->editForm['image']);
+            $this->editForm['image'] = $this->editImage->store('categories');
+        }
+        $this->category->update($this->editForm);
+        $this->category->brands()->sync($this->editForm['brands']);
+        $this->reset(['editForm','editImage']);
+        $this->getCategories();
     }
 
     public function delete(Category $category)

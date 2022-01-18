@@ -108,7 +108,7 @@
                     @if ($editImage)
                         <img class="w-full h-64 object-cover object-center" src="{{ $editImage->temporaryUrl() }}" >
                     @else
-                        <img class="w-full h-64 object-cover object-center" src="{{ $editForm['image'] }}" >
+                        <img class="w-full h-64 object-cover object-center" src="{{ Storage::url($editForm['image']) }}" >
                     @endif
                 </div>
                 <div>
