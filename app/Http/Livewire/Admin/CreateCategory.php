@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Brand;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -15,6 +16,7 @@ class CreateCategory extends Component
     public $brands;
     public $categories;
     public $rand;
+    public $category;
     public $createForm = [
         'name' => null,
         'slug' => null,
@@ -22,6 +24,15 @@ class CreateCategory extends Component
         'image' => null,
         'brands' => []
     ];
+    public $editForm = [
+        'open' => false,
+        'name' => null,
+        'slug' => null,
+        'icon' => null,
+        'image' => null,
+        'brands' => []
+    ];
+    public $editImage;
     protected $rules = [
         'createForm.name' => 'required',
         'createForm.slug' => 'required|unique:categories,slug',
@@ -76,6 +87,19 @@ class CreateCategory extends Component
         $this->rand = rand();
         $this->reset('createForm');
         $this->getCategories();
+    }
+
+    public function edit(Category $category)
+    {
+        $this->category = $category;
+        $this->editForm = [
+            'open' => true,
+            'name' => $category->name,
+            'slug' => $category->slug,
+            'icon' => $category->icon,
+            'image' => Storage::url($category->image),
+            'brands' => $category->brands->pluck('id')->toArray()
+        ];
     }
 
     public function delete(Category $category)
