@@ -100,6 +100,7 @@ class CreateCategory extends Component
             'image' => Storage::url($category->image),
             'brands' => $category->brands->pluck('id')->toArray()
         ];
+        $this->reset(['editImage']);
     }
 
     public function delete(Category $category)
