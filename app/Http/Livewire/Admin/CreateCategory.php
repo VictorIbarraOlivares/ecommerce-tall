@@ -46,6 +46,11 @@ class CreateCategory extends Component
         'createForm.icon' => 'icono',
         'createForm.image' => 'imagen',
         'createForm.brands' => 'marcas',
+        'editForm.name' => 'nombre',
+        'editForm.slug' => 'slug',
+        'editForm.icon' => 'icono',
+        'editImage' => 'imagen',
+        'editForm.brands' => 'marcas',
     ];
 
     protected $listeners = ['delete'];
@@ -60,6 +65,11 @@ class CreateCategory extends Component
     public function updatedCreateFormName($value)
     {
         $this->createForm['slug'] = Str::slug($value);
+    }
+
+    public function updatedEditFormName($value)
+    {
+        $this->editForm['slug'] = Str::slug($value);
     }
 
     public function getBrands()
@@ -101,6 +111,20 @@ class CreateCategory extends Component
             'brands' => $category->brands->pluck('id')->toArray()
         ];
         $this->reset(['editImage']);
+    }
+
+    public function update()
+    {
+        $rules = [
+            'editForm.name' => 'required',
+            'editForm.slug' => 'required|unique:categories,slug,'.$this->category->id,
+            'editForm.icon' => 'required',
+            'editForm.brands' => 'required',
+        ];
+        if ($this->editImage) {
+            $rules['editImage'] = 'image|max:1024';
+        }
+        $this->validate($rules);
     }
 
     public function delete(Category $category)
