@@ -3,19 +3,28 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryFilter extends Component
 {
     use WithPagination;
     public $category, $subcategory, $brand;
     public $view = 'grid';
+    public $queryString = ['subcategory', 'brand'];
 
     public function clean()
     {
-        $this->reset(['subcategory', 'brand']);
+        $this->reset(['subcategory', 'brand', 'page']);
+    }
+
+    public function updatedSubcategory() {
+        $this->resetPage();
+    }
+
+    public function updatedBrand() {
+        $this->resetPage();
     }
 
     public function render()
@@ -26,7 +35,7 @@ class CategoryFilter extends Component
 
         if ($this->subcategory) {
             $productsQuery = $productsQuery->whereHas('subcategory', function (Builder $query) {
-                $query->where('name', $this->subcategory);
+                $query->where('slug', $this->subcategory);
             });
         }
 
