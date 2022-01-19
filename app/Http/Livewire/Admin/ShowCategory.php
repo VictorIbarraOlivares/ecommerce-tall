@@ -2,15 +2,57 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\Category;
 use Livewire\Component;
+use App\Models\Category;
+use App\Models\Subcategory;
+use Illuminate\Support\Str;
 
 class ShowCategory extends Component
 {
     public $category;
+    public $subcategories;
+    public $createForm = [
+        'name' => null,
+        'slug' => null,
+        'color' => false,
+        'size' => false
+    ];
+
+    protected $rules = [
+        'createForm.name' => 'required',
+        'createForm.slug' => 'required|unique:categories,slug',
+        'createForm.color' => 'required',
+        'createForm.size' => 'required'
+    ];
+    protected $validationAttributes = [
+        'createForm.name' => 'nombre',
+        'createForm.slug' => 'slug',
+    ];
+
     public function mount(Category $category)
     {
         $this->category = $category;
+        $this->getSubcategories();
+    }
+
+    public function getSubcategories()
+    {
+        $this->subcategories = Subcategory::where('category_id', $this->category->id)->get();
+    }
+
+    public function updatedCreateFormName($value)
+    {
+        $this->createForm['slug'] = Str::slug($value);
+    }
+
+    public function save()
+    {
+        $this->validate();
+    }
+
+    public function edit(Subcategory $subcategory)
+    {
+
     }
 
     public function render()
