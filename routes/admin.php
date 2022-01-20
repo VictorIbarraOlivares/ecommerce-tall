@@ -7,6 +7,7 @@ use App\Http\Livewire\Admin\EditProduct;
 use App\Http\Livewire\Admin\ShowCategory;
 use App\Http\Livewire\Admin\ShowProducts;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Admin\Brands;
 
 Route::get('/', ShowProducts::class)->name('admin.index');
 Route::get('/products/create', CreateProduct::class)->name('admin.products.create');
@@ -15,3 +16,4 @@ Route::post('products/{product}/files', [ProductController::class, 'files'])->na
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
 Route::get('/categories/{category}', ShowCategory::class)->name('admin.categories.show');
+Route::get('/brands', Brands::class)->name('admin.brands.index');
