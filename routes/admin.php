@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Livewire\Admin\CreateProduct;
 use App\Http\Livewire\Admin\EditProduct;
@@ -17,3 +18,5 @@ Route::post('products/{product}/files', [ProductController::class, 'files'])->na
 Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
 Route::get('/categories/{category}', ShowCategory::class)->name('admin.categories.show');
 Route::get('/brands', Brands::class)->name('admin.brands.index');
+Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
