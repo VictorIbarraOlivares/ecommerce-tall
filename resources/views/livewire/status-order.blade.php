@@ -38,7 +38,7 @@
             <p class="text-gray-700 uppercase">
                 <span class="font-bold">Número de orden:</span> Orden-{{ $order->id }}
             </p>
-            <form wire:submit.prevent='update'>
+            <form wire:submit.prevent='update'> 
                 <div class="flex space-x-3 mt-2">
                     <x-jet-label>
                         <input wire:model='status' type="radio" name="status" value="2" class="mr-2">
