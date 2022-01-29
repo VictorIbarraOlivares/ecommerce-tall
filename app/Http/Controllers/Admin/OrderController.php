@@ -10,14 +10,14 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::query();
+        $orders = Order::query()->where('status', '!=', Order::PENDIENTE);
         if (request('status')) {
             $orders->where('status', request('status'));
         }
         $orders = $orders->get();
 
         $amountOfOrders = array(
-            Order::PENDIENTE => Order::where('status', Order::PENDIENTE)->count(),
+            // Order::PENDIENTE => Order::where('status', Order::PENDIENTE)->count(),
             Order::RECIBIDO => Order::where('status', Order::RECIBIDO)->count(),
             Order::ENVIADO => Order::where('status', Order::ENVIADO)->count(), 
             Order::ENTREGADO => Order::where('status', Order::ENTREGADO)->count(),
@@ -29,6 +29,6 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        return view('admin.orders.show');
+        return view('admin.orders.show', compact('order'));
     }
 }
