@@ -45,14 +45,14 @@
                     @foreach ($this->departments as $department)
                     <tr>
                         <td class="py-2">
-                            <a href="">
+                            <a href="{{ route('admin.departments.show', $department) }}" class="uppercase underline hover:text-blue-600">
                                 {{ $department->name }}
                             </a>
                         </td>
                         <td class="py-2">
                             <div class="flex divide-x divide-gray-300 font-semibold">
-                                <a wire:click="edit('{{ $department->slug }}')" class="pr-2 hover:text-blue-600 cursor-pointer">Editar</a>
-                                <a wire:click="$emit('delete-department', '{{ $department->slug }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
+                                <a wire:click="edit('{{ $department->id }}')" class="pr-2 hover:text-blue-600 cursor-pointer">Editar</a>
+                                <a wire:click="$emit('delete-department', '{{ $department->id }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
                             </div>
                         </td>
                     </tr>
@@ -61,4 +61,26 @@
             </table>
         </x-slot>
     </x-jet-action-section>
+
+    <x-jet-dialog-modal wire:model='editForm.open'>
+        <x-slot name='title'>
+            Editar departamento
+        </x-slot>
+        <x-slot name='content'>
+            <div class="space-y-3">
+                <div>
+                    <x-jet-label>
+                        Nombre
+                    </x-jet-label>
+                    <x-jet-input wire:model='editForm.name' type="text" class="w-full mt-1"/>
+                    <x-jet-input-error for='editForm.name' />
+                </div>
+            </div>
+        </x-slot>
+        <x-slot name='footer'>
+            <x-jet-danger-button wire:click='update' wire:loading.attr='disabled' wire:target='editImage, update'>
+                Actualizar
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>

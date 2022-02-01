@@ -10,6 +10,7 @@ use App\Http\Livewire\Admin\ShowProducts;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Brands;
 use App\Http\Livewire\Admin\DepartmentComponent;
+use App\Http\Livewire\Admin\ShowDepartment;
 
 Route::get('/', ShowProducts::class)->name('admin.index');
 Route::get('/products/create', CreateProduct::class)->name('admin.products.create');
@@ -23,3 +24,4 @@ Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.ind
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
 
 Route::get('departments', DepartmentComponent::class)->name('admin.departments.index');
+Route::get('departments/{department}', ShowDepartment::class)->name('admin.departments.show');
