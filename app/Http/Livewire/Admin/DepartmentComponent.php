@@ -13,11 +13,6 @@ class DepartmentComponent extends Component
     protected $listeners = ['delete'];
     protected $validationAttributes = ['createForm.name' => 'nombre', 'editForm.name' => 'nombre'];
 
-    public function mount()
-    {
-
-    }
-
     public function getDepartmentsProperty()
     {
         return Department::all();

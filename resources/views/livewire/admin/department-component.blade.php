@@ -12,7 +12,7 @@
                 <x-jet-label>
                     Nombre
                 </x-jet-label>
-                <x-jet-input wire:model='createForm.name' type='text' class="w-full mt-1" />
+                <x-jet-input wire:model.defer='createForm.name' type='text' class="w-full mt-1" />
                 <x-jet-input-error for='createForm.name' />
             </div>
         </x-slot>
@@ -78,7 +78,7 @@
             </div>
         </x-slot>
         <x-slot name='footer'>
-            <x-jet-danger-button wire:click='update' wire:loading.attr='disabled' wire:target='editImage, update'>
+            <x-jet-danger-button wire:click='update' wire:loading.attr='disabled' wire:target='update'>
                 Actualizar
             </x-jet-danger-button>
         </x-slot>
