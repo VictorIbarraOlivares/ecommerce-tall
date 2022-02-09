@@ -11,13 +11,14 @@ class ShowDepartment extends Component
     protected $listeners = ['delete'];
     public $department;
     public $city;
-    public $createForm = ['nombre' => '', 'cost' => null];
-    public $editForm = ['open' => false, 'nombre' => '', 'cost' => null];   
+    public $createForm = ['name' => '', 'cost' => null];
+    public $editForm = ['open' => false, 'name' => '', 'cost' => null];   
     protected $validationAttributes = [
         'createForm.name' => 'nombre',
         'createForm.cost' => 'costo',
         'editForm.name' => 'nombre',
-        'editForm.cost' => 'costo'];
+        'editForm.cost' => 'costo'
+    ];
 
     public function mount(Department $department)
     {

@@ -8,8 +8,8 @@ use Livewire\Component;
 class DepartmentComponent extends Component
 {
     public $department;
-    public $createForm = ['nombre' => ''];
-    public $editForm = ['open' => false, 'nombre' => ''];   
+    public $createForm = ['name' => ''];
+    public $editForm = ['open' => false, 'name' => ''];   
     protected $listeners = ['delete'];
     protected $validationAttributes = ['createForm.name' => 'nombre', 'editForm.name' => 'nombre'];
 

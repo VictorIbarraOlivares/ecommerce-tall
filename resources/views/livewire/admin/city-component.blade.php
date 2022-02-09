@@ -1,7 +1,8 @@
 <div>
+    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight capitalize">
-           Departamento {{ $department->name }}
+           Distrito {{ $city->name }}
         </h2>
     </x-slot>
 
@@ -9,10 +10,10 @@
         {{-- The whole world belongs to you. --}}
         <x-jet-form-section submit='save' class="mb-6">
             <x-slot name='title'>
-                Agregar una nueva ciudad
+                Agregar un nuevo distrito
             </x-slot>
             <x-slot name='description'>
-                Completar informacion necesaria para poder agregar una nueva ciudad
+                Completar informacion necesaria para poder agregar un nuevo distrito
             </x-slot>
             <x-slot name='form'>
                 <div class="col-span-6 sm:col-span-4">
@@ -22,17 +23,10 @@
                     <x-jet-input wire:model.defer='createForm.name' type='text' class="w-full mt-1" />
                     <x-jet-input-error for='createForm.name' />
                 </div>
-                <div class="col-span-6 sm:col-span-4">
-                    <x-jet-label>
-                        Costo
-                    </x-jet-label>
-                    <x-jet-input wire:model.defer='createForm.cost' type='number' class="w-full mt-1" />
-                    <x-jet-input-error for='createForm.cost' />
-                </div>
             </x-slot>
             <x-slot name='actions'>
                 <x-jet-action-message class="mr-3" on='save'>
-                    Ciudad agregada
+                    Distrito agregado
                 </x-jet-action-message>
                 <x-jet-button>
                     Agregar
@@ -42,10 +36,10 @@
     
         <x-jet-action-section >
             <x-slot name="title">
-                Lista de ciudades
+                Lista de distritos
             </x-slot>
             <x-slot name="description">
-                Aquí encontrará todas las ciudades agregadas
+                Aquí encontrará todos los distritos agregados
             </x-slot>
             <x-slot name="content">
                 <table class="text-gray-600">
@@ -56,17 +50,18 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
-                        @foreach ($this->cities as $city)
+                        @foreach ($this->districts as $district)
                         <tr>
                             <td class="py-2">
-                                <a href="{{ route('admin.cities.show', $city) }}"  class="uppercase underline hover:text-blue-600">
-                                    {{ $city->name }}
+                                {{-- href="{{ route('admin.cities.show', $city) }}" --}}
+                                <a  class="uppercase underline hover:text-blue-600">
+                                    {{ $district->name }}
                                 </a>
                             </td>
                             <td class="py-2">
                                 <div class="flex divide-x divide-gray-300 font-semibold">
-                                    <a wire:click="edit('{{ $city->id }}')" class="pr-2 hover:text-blue-600 cursor-pointer">Editar</a>
-                                    <a wire:click="$emit('delete-department', '{{ $city->id }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
+                                    <a wire:click="edit('{{ $district->id }}')" class="pr-2 hover:text-blue-600 cursor-pointer">Editar</a>
+                                    <a wire:click="$emit('delete-department', '{{ $district->id }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
                                 </div>
                             </td>
                         </tr>
@@ -78,7 +73,7 @@
     
         <x-jet-dialog-modal wire:model='editForm.open'>
             <x-slot name='title'>
-                Editar ciudad
+                Editar distrito
             </x-slot>
             <x-slot name='content'>
                 <div class="space-y-3">
@@ -88,13 +83,6 @@
                         </x-jet-label>
                         <x-jet-input wire:model='editForm.name' type="text" class="w-full mt-1"/>
                         <x-jet-input-error for='editForm.name' />
-                    </div>
-                    <div>
-                        <x-jet-label>
-                            Costo
-                        </x-jet-label>
-                        <x-jet-input wire:model='editForm.cost' type="text" class="w-full mt-1"/>
-                        <x-jet-input-error for='editForm.cost' />
                     </div>
                 </div>
             </x-slot>
