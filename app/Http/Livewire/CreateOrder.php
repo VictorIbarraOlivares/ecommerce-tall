@@ -90,11 +90,19 @@ class CreateOrder extends Component
         $order->content = Cart::content();
         if ($this->envioType == 2) {
             $order->shipping_cost = $this->shippingCost;
-            $order->department_id = $this->departmentId;
-            $order->city_id = $this->cityId;
-            $order->district_id = $this->disctrictId;
-            $order->address = $this->address;
-            $order->reference = $this->reference; 
+            // $order->department_id = $this->departmentId;
+            // $order->city_id = $this->cityId;
+            // $order->district_id = $this->disctrictId;
+            // $order->address = $this->address;
+            // $order->reference = $this->reference; 
+            $order->envio = json_encode([
+                'department' => Department::find($this->departmentId)->name,
+                'city' => City::find($this->cityId)->name,
+                'district' => District::find($this->disctrictId)->name,
+                'address' => $this->address,
+                'reference' => $this->reference, 
+            ]);
+
         }
         $order->save();
         foreach (Cart::content() as $item) {

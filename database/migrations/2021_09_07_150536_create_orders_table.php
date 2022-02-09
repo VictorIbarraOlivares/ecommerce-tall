@@ -25,14 +25,15 @@ class CreateOrdersTable extends Migration
             $table->integer('shipping_cost');
             $table->integer('total');
             $table->json('content');
-            $table->unsignedBigInteger('department_id')->nullable();
-            $table->foreign('department_id')->references('id')->on('departments');
-            $table->unsignedBigInteger('city_id')->nullable();
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->unsignedBigInteger('district_id')->nullable();
-            $table->foreign('district_id')->references('id')->on('districts');
-            $table->string('address')->nullable();
-            $table->string('reference')->nullable();
+            // $table->unsignedBigInteger('department_id')->nullable();
+            // $table->foreign('department_id')->references('id')->on('departments');
+            // $table->unsignedBigInteger('city_id')->nullable();
+            // $table->foreign('city_id')->references('id')->on('cities');
+            // $table->unsignedBigInteger('district_id')->nullable();
+            // $table->foreign('district_id')->references('id')->on('districts');
+            // $table->string('address')->nullable();
+            // $table->string('reference')->nullable();
+            $table->json('envio')->nullable();
             $table->timestamps();
         });
     }
