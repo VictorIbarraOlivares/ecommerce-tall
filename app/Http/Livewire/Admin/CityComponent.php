@@ -58,7 +58,7 @@ class CityComponent extends Component
 
     public function delete(District $district)
     {
-        $city->delete();
+        $district->delete();
         $this->getDistrictsProperty();
     }
 

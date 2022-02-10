@@ -61,7 +61,7 @@
                             <td class="py-2">
                                 <div class="flex divide-x divide-gray-300 font-semibold">
                                     <a wire:click="edit('{{ $district->id }}')" class="pr-2 hover:text-blue-600 cursor-pointer">Editar</a>
-                                    <a wire:click="$emit('delete-department', '{{ $district->id }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
+                                    <a wire:click="$emit('delete-district', '{{ $district->id }}')" class="pl-2 hover:text-red-600 cursor-pointer">Eliminar</a>
                                 </div>
                             </td>
                         </tr>
@@ -93,4 +93,29 @@
             </x-slot>
         </x-jet-dialog-modal>
     </div>
+
+    @push('script')
+        <script>
+            Livewire.on('delete-district', district_id => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                        text: "No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.city-component', 'delete', district_id)
+                        Swal.fire(
+                            'Eliminado!',
+                            '',
+                            'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
 </div>

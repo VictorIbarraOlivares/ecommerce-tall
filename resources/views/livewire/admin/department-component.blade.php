@@ -83,4 +83,29 @@
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
+
+    @push('script')
+        <script>
+            Livewire.on('delete-department', department_id => {
+                Swal.fire({
+                    title: 'Eliminar?',
+                        text: "No podrás revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, eliminar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('admin.department-component', 'delete', department_id)
+                        Swal.fire(
+                            'Eliminado!',
+                            '',
+                            'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
 </div>
