@@ -39,7 +39,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse ($users as $user)    
-                        <tr>
+                        <tr wire:key='{{ $user->email }}'>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">
                                     {{ $user->id }}
@@ -65,7 +65,14 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                {{-- <a href="{{ route('admin.products.edit', $product) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a> --}}
+                                <label for="">
+                                    <input wire:change='assignRole({{ $user->id }}, $event.target.value)' {{ count($user->roles) ? 'checked' : '' }} type="radio" name="{{ $user->email }}" value="1">
+                                    Si
+                                </label>
+                                <label for="" class="ml-2">
+                                    <input wire:change='assignRole({{ $user->id }}, $event.target.value)' {{ count($user->roles) ? '' : 'checked' }} type="radio" name="{{ $user->email }}" value="0">
+                                    No
+                                </label>
                             </td>
                         </tr>
                     @empty
