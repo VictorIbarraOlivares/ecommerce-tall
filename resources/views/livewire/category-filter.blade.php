@@ -4,7 +4,7 @@
         <div class="px-6 py-2 flex justify-between items-center">
             <h1 class="font-semibold text-gray-700 uppercase">{{ $category->name }}</h1>
 
-            <div class="grid grid-cols-2 border border-gray-300 divide-x divide-gray-300 rounded shadow-sm text-gray-500">
+            <div class="hidden md:block grid grid-cols-2 border border-gray-300 divide-x divide-gray-300 rounded shadow-sm text-gray-500">
                 <i wire:click='$set("view", "grid")' class="{{ $view == 'grid' ? 'text-orange-500' : '' }} fas fa-border-all p-3 cursor-pointer"></i>
                 <i wire:click='$set("view", "list")' class="{{ $view == 'list' ? 'text-orange-500' : '' }} fas fa-th-list p-3 cursor-pointer"></i>
             </div>
@@ -44,11 +44,47 @@
                                 <figure>
                                     <img class="h-48 w-full object-cover object-center" src="{{ Storage::url($product->images->first()->url) }}">
                                 </figure>
-                                <div class="py-4 px-6">
-                                    <h1 class="text-lg font-semibold ">
-                                        <a href="{{ route('products.show',  $product) }}">{{ Str::limit($product->name, 20, '...') }}</a>
-                                    </h1>
-                                    <p class="font-bold text-trueGray-700">US$ {{ $product->price }}</p>
+                                <div class="flex-1 py-4 px-6 flex flex-col">
+                                    <div class="lg:flex justify-between">
+                                        <div>
+                                            <h1 class="text-lg font-semibold ">
+                                                <a href="{{ route('products.show',  $product) }}">{{ Str::limit($product->name, 20, '...') }}</a>
+                                            </h1>
+                                            <p class="font-bold text-trueGray-700">US$ {{ $product->price }}</p>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <ul class="flex text-sm">
+                                                    <li class="mr-1">
+                                                        <i class="fas fa-star text-{{ $product->rating >= 1 ? 'yellow' : 'gray' }}-400"></i>
+                                                    </li>
+                                    
+                                                    <li class="mr-1">
+                                                        <i class="fas fa-star text-{{ $product->rating >= 2 ? 'yellow' : 'gray' }}-400"></i>
+                                                    </li>
+                                    
+                                                    <li class="mr-1">
+                                                        <i class="fas fa-star text-{{ $product->rating >= 3 ? 'yellow' : 'gray' }}-400"></i>
+                                                    </li>
+                                    
+                                                    <li class="mr-1">
+                                                        <i class="fas fa-star text-{{ $product->rating >= 4 ? 'yellow' : 'gray' }}-400"></i>
+                                                    </li>
+                                    
+                                                    <li class="mr-1">
+                                                        <i class="fas fa-star text-{{ $product->rating == 5 ? 'yellow' : 'gray' }}-400"></i>
+                                                    </li>
+                                                </ul>
+                                                <span class="text-gray-700 text-sm">(24)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 md:mt-auto mb-2">
+                                        <x-danger-link href="{{ route('products.show', $product) }}">
+                                            más información
+                                        </x-danger-link>
+                                    </div>
                                 </div>
                             </article>
                         </li>
