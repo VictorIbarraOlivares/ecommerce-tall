@@ -13,9 +13,15 @@ class Product extends Model
     const BORRADOR = 1;
     const PUBLICADO = 2;
 
+    //  Relacion uno a muchos
     public function sizes()
     {
         return $this->hasMany(Size::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     // Relacion uno a muchos inversa

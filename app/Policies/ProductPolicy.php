@@ -13,13 +13,19 @@ class ProductPolicy
 
     public function review(User $user, Product $product)
     {
-        $orders = Order::where('user_id', $user->id)
-            ->select('content')->get()
-            ->map( function($order) {
-                return json_decode($order->content, true);
-            });
-        $products = $orders->collapse();
+        $reviews = $product->reviews()->where('user_id', $user->id)->first();
+        if (is_null($reviews)) {
+            $orders = Order::where('user_id', $user->id)
+                ->select('content')->get()
+                ->map( function($order) {
+                    return json_decode($order->content, true);
+                });
+            $products = $orders->collapse();
+
+            return $products->contains('id', $product->id);
+        } else {
+            return false;
+        }
         
-        return $products->contains('id', $product->id);
     }
 }

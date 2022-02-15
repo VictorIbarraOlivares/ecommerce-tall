@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebhooksController;
@@ -28,3 +29,5 @@ Route::middleware(['auth'])->group(function() {
     Route::get('orders/{order}/pay', [OrderController::class, 'pay'])->name('orders.pay');
     Route::post('webhooks', WebhooksController::class);
 });
+
+Route::post('reviews/{product}', [ReviewController::class, 'store'])->name('reviews.store');

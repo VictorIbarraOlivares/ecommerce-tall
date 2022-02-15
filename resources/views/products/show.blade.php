@@ -19,10 +19,12 @@
 
                 @can('review', $product)
                     <div class="text-gray-700 mt-4">
-                        <h2 class="font-bold text-lg">Dejar reseñas</h2>
+                        <h2 class="font-bold text-lg">Dejar reseña</h2>
 
-                        <form action="">
-                            <textarea name="" id="editor" ></textarea>
+                        <form action="{{ route('reviews.store', $product) }}" method="POST">
+                            @csrf
+                            <textarea name="comment" id="editor" ></textarea>
+                            <x-jet-input-error for="comment" />
 
                             <div x-data="{rating: 5}" class="flex items-center mt-2">
                                 <p class="font-semibold mr-3">Puntaje: </p>
@@ -53,10 +55,10 @@
                                         </button>
                                     </li>
                                 </ul>
-                                <input class="hidden" type="number" x-model="rating">
+                                <input name="rating" class="hidden" type="number" x-model="rating">
 
-                                <x-jet-button type="button" class="ml-auto bg-orange-500  hover:bg-orange-600 active:bg-orange-500 focus:outline-none focus:border-orange-500 focus:ring focus:ring-orange-300 ">
-                                    Agregar reseña 
+                                <x-jet-button class="ml-auto bg-orange-500  hover:bg-orange-600 active:bg-orange-500 focus:outline-none focus:border-orange-500 focus:ring focus:ring-orange-300 ">
+                                    Dejar reseña 
                                 </x-jet-button>
                             </div>
                         </form>
