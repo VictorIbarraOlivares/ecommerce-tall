@@ -64,14 +64,42 @@
                         </form>
                     </div>
                 @endcan
+
+                @if ($product->reviews->isNotEmpty())
+                    <div class="mt-6 text-gray-700">
+                        <h2 class="font-bold text-lg">Reseñas</h2>
+                        <div class="mt-2">
+                            @foreach ($product->reviews as $review)
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-10 h-10 rounded-full mr-4 object-cover" src="{{ $review->user->profile_photo_url }}" alt="{{ $review->user->name }}">
+                                    </div>
+                                    <div class="flex-1 ">
+                                        <p class="font-semibold">{{ $review->user->name }}</p>
+                                        <p class="text-sm">{{ $review->created_at->diffForHumans() }}</p>
+                                        <div>
+                                            {!! $review->comment !!}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            {{ $review->rating }}
+                                            <i class="fas fa-star text-yellow-500"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <div>
                 <h1 class="text-xl font-bold text-trueGray-700">{{ $product->name }}</h1>
                 <div class="flex">
                     <p class="text-trueGray-700">Marca: <a class="underline capitalize hover:text-orange-500" href="">{{ $product->brand->name }}</a></p>
-                    <p class="text-trueGray-700 mx-6">5 <i class="fas fa-star text-sm text-yellow-400"></i></p>
-                    <a class="text-orange-500 underline hover:text-orange-600" href="">39 reseñas</a>
+                    <p class="text-trueGray-700 mx-6">{{ round($product->reviews->avg('rating'), 2) }} <i class="fas fa-star text-sm text-yellow-400"></i></p>
+                    <a class="text-orange-500 underline hover:text-orange-600" href="">{{ $product->reviews->count() }} reseñas</a>
                 </div>
 
                 <p class="text-2xl font-semibold text-trueGray-700 my-4" >USD {{ $product->price }}</p>
