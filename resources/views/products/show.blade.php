@@ -16,6 +16,50 @@
                     <h2 class="font-bold text-lg">Descripción</h2>
                     {!! $product->description !!}
                 </div>
+
+                <div class="text-gray-700 mt-4">
+                    <h2 class="font-bold text-lg">Dejar reseñas</h2>
+
+                    <form action="">
+                        <textarea name="" id="editor" ></textarea>
+
+                        <div x-data="{rating: 5}" class="flex items-center mt-2">
+                            <p class="font-semibold mr-3">Puntaje: </p>
+                            <ul class="flex space-x-2">
+                                <li x-bind:class="rating >= 1 ? 'text-yellow-500' : 'text-gray-500'">
+                                    <button type="button" class="focus:outline-none" x-on:click="rating = 1">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </li>
+                                <li x-bind:class="rating >= 2 ? 'text-yellow-500' : 'text-gray-500'">
+                                    <button type="button" class="focus:outline-none" x-on:click="rating = 2">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </li>
+                                <li x-bind:class="rating >= 3 ? 'text-yellow-500' : 'text-gray-500'">
+                                    <button type="button" class="focus:outline-none" x-on:click="rating = 3">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </li>
+                                <li x-bind:class="rating >= 4 ? 'text-yellow-500' : 'text-gray-500'">
+                                    <button type="button" class="focus:outline-none" x-on:click="rating = 4">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </li>
+                                <li x-bind:class="rating >= 5 ? 'text-yellow-500' : 'text-gray-500'">
+                                    <button type="button" class="focus:outline-none" x-on:click="rating = 5">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                            <input class="hidden" type="number" x-model="rating">
+
+                            <x-jet-button type="button" class="ml-auto bg-orange-500  hover:bg-orange-600 active:bg-orange-500 focus:outline-none focus:border-orange-500 focus:ring focus:ring-orange-300 ">
+                                Agregar reseña 
+                            </x-jet-button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <div>
@@ -52,6 +96,17 @@
     </div>
 
     @push('script')
+        <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+        <script>
+            ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]
+            } )
+            .catch( error => {
+                console.log( error );
+            } );
+
+        </script>
         <script>
             $(document).ready(function() {
                 $('.flexslider').flexslider({
